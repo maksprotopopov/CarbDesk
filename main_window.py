@@ -10,6 +10,7 @@ from PySide6.QtWidgets import (
     QPushButton,
     QScrollArea,
     QLineEdit,
+    QStackedWidget,
 )
 from PySide6.QtCore import Qt
 
@@ -29,8 +30,9 @@ class MainWindow(QMainWindow):
 
         self.history = ProductHistory()
         self.history.import_history()
+        print("History imported:", self.history.get_products())
         self.product_list = []
-        self.bread_units_value = 10.0
+        self.bread_units_value = 10
 
         # =========================
         # Header
@@ -120,20 +122,6 @@ class MainWindow(QMainWindow):
         self.meal_layout.addWidget(self.meal_scroll)
 
         # -------------------------
-        # Product (INITIAL)
-        # -------------------------
-
-        # self.product = Product(name="Картопля", carbs_per_100g=20)
-        # self.history.add_product(product=self.product)
-        # print(
-        #     "Product value:",
-        #     self.product.name,
-        #     self.product.carbs_per_100g,
-        #     self.product.calculate_carbohydrates(200),
-        #     self.product.calculate_bread_units(200),
-        # )
-
-        # -------------------------
         # Add product
         # -------------------------
 
@@ -201,6 +189,18 @@ class MainWindow(QMainWindow):
         settings_layout.setContentsMargins(24, 24, 24, 24)
         settings_layout.setSpacing(16)
 
+        self.settings_stack = QStackedWidget()
+        settings_layout.addWidget(self.settings_stack)
+
+        # =========================
+        # Settings content
+        # =========================
+
+        settings_page = QWidget()
+        settings_page_layout = QVBoxLayout(settings_page)
+        settings_page_layout.setContentsMargins(0, 0, 0, 0)
+        settings_page_layout.setSpacing(16)
+
         settings_title = QLabel("Налаштування")
         settings_title.setObjectName("settingsTitle")
 
@@ -215,15 +215,63 @@ class MainWindow(QMainWindow):
         submit_button = QPushButton("Зберегти")
         submit_button.setObjectName("primaryButton")
 
-        settings_layout.addWidget(settings_title)
-        settings_layout.addWidget(bread_units_equals_label)
-        settings_layout.addWidget(self.bread_units_equals_edit)
-        settings_layout.addWidget(submit_button)
-        settings_layout.addStretch()
+        history_button = QPushButton("Відкрити історію")
+        history_button.setObjectName("secondaryButton")
+
+        settings_page_layout.addWidget(settings_title)
+        settings_page_layout.addWidget(bread_units_equals_label)
+        settings_page_layout.addWidget(self.bread_units_equals_edit)
+        settings_page_layout.addWidget(submit_button)
+        settings_page_layout.addStretch()
+        settings_page_layout.addWidget(history_button)
 
         submit_button.clicked.connect(self.save_settings)
 
         self.settings_panel.hide()
+
+        # =========================
+        # History content
+        # =========================
+
+        history_page = QWidget()
+        history_page_layout = QVBoxLayout(history_page)
+        history_page_layout.setContentsMargins(0, 0, 0, 0)
+        history_page_layout.setSpacing(12)
+
+        history_title = QLabel("Історія")
+        history_title.setObjectName("settingsTitle")
+
+        back_button = QPushButton("← Налаштування")
+        back_button.setObjectName("secondaryButton")
+
+        history_scroll = QScrollArea()
+        history_scroll.setWidgetResizable(True)
+        history_scroll.setFrameShape(QFrame.NoFrame)
+
+        history_content = QWidget()
+        self.history_content_layout = QVBoxLayout(history_content)
+        self.history_content_layout.setContentsMargins(0, 0, 0, 0)
+        self.history_content_layout.setSpacing(8)
+        self.history_content_layout.setAlignment(Qt.AlignTop)
+
+        history_scroll.setWidget(history_content)
+
+        history_page_layout.addWidget(history_title)
+        history_page_layout.addWidget(history_scroll)
+        history_page_layout.addWidget(back_button)
+
+        # =========================
+        # Adding Pages
+        # =========================
+
+        self.settings_stack.addWidget(settings_page)
+        self.settings_stack.addWidget(history_page)
+
+        history_button.clicked.connect(self.show_history)
+
+        back_button.clicked.connect(
+            lambda: self.settings_stack.setCurrentWidget(settings_page)
+        )
 
     # =========================
     # Functions
@@ -291,7 +339,26 @@ class MainWindow(QMainWindow):
     def save_settings(self):
         bread_units_value = self.bread_units_equals_edit.text()
         if bread_units_value.isdigit():
-            bread_units_value = float(bread_units_value)
+            bread_units_value = int(bread_units_value)
             if 10 <= bread_units_value <= 15:
                 self.bread_units_value = bread_units_value
                 self.settings_panel.hide()
+
+    def show_history(self):
+        self.settings_stack.setCurrentIndex(1)
+
+        # очищаємо старий список
+        while self.history_content_layout.count():
+            item = self.history_content_layout.takeAt(0)
+
+            if item.widget():
+                item.widget().deleteLater()
+
+        for product in self.history.get_products():
+            product_label = QLabel(
+                f"{product.name}\n" f"{product.carbs_per_100g} г / 100 г"
+            )
+
+            product_label.setObjectName("historyItem")
+
+            self.history_content_layout.addWidget(product_label)

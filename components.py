@@ -13,6 +13,7 @@ from PySide6.QtWidgets import (
 
 from PySide6.QtCore import QStringListModel, Qt, Signal
 import json
+from pathlib import Path
 
 
 class ProductCard(QFrame):
@@ -115,16 +116,19 @@ class ProductHistory:
         return self.products
 
     def import_history(self):
+        file_path = Path(__file__).parent / "data" / "products.json"
+
         try:
-            with open("./data/products.json", "r", encoding="utf-8") as file:
+            with open(file_path, "r", encoding="utf-8") as file:
                 data = json.load(file)
         except FileNotFoundError:
+            print("History file not found:", file_path)
             return
 
         self.products = [
             Product(item["name"], item["carbs_per_100g"])
             for item in data
-            if isinstance(item, dict) and "name" in item and "carbs_per_100g" in item
+            if (isinstance(item, dict) and "name" in item and "carbs_per_100g" in item)
         ]
 
     def export_history(self, file_path="./data/products.json"):
