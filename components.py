@@ -92,9 +92,9 @@ class Product:
     def calculate_carbohydrates(self, weight):
         return round(weight * self.carbs_per_100g / 100, 1)
 
-    def calculate_bread_units(self, weight):
+    def calculate_bread_units(self, weight, bread_units_value):
         carbohydrates = self.calculate_carbohydrates(weight)
-        return round(carbohydrates / 10, 1)
+        return round(carbohydrates / bread_units_value, 1)
 
 
 class ProductHistory:

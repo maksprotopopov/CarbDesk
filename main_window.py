@@ -30,6 +30,7 @@ class MainWindow(QMainWindow):
         self.history = ProductHistory()
         self.history.import_history()
         self.product_list = []
+        self.bread_units_value = 10.0
 
         # =========================
         # Header
@@ -203,17 +204,24 @@ class MainWindow(QMainWindow):
         settings_title = QLabel("Налаштування")
         settings_title.setObjectName("settingsTitle")
 
-        bread_units_equals_label = QLabel("1 Хлібна Одиниця:")
+        bread_units_equals_label = QLabel("1 Хлібна Одиниця (г):")
         bread_units_equals_label.setObjectName("breadUnitsEqualsLabel")
 
-        bread_units_equals_edit = QLineEdit()
-        bread_units_equals_edit.setObjectName("breadUnitsEqualsEdit")
-        bread_units_equals_edit.setPlaceholderText("10 - 15")
+        self.bread_units_equals_edit = QLineEdit()
+        self.bread_units_equals_edit.setObjectName("breadUnitsEqualsEdit")
+        self.bread_units_equals_edit.setText("10")
+        self.bread_units_equals_edit.setPlaceholderText("10 - 15")
+
+        submit_button = QPushButton("Зберегти")
+        submit_button.setObjectName("primaryButton")
 
         settings_layout.addWidget(settings_title)
         settings_layout.addWidget(bread_units_equals_label)
-        settings_layout.addWidget(bread_units_equals_edit)
+        settings_layout.addWidget(self.bread_units_equals_edit)
+        settings_layout.addWidget(submit_button)
         settings_layout.addStretch()
+
+        submit_button.clicked.connect(self.save_settings)
 
         self.settings_panel.hide()
 
@@ -233,7 +241,9 @@ class MainWindow(QMainWindow):
                 weight=weight,
                 carbs_per_100g=product.carbs_per_100g,
                 carbohydrates=product.calculate_carbohydrates(weight),
-                bread_units=product.calculate_bread_units(weight),
+                bread_units=product.calculate_bread_units(
+                    weight, self.bread_units_value
+                ),
             )
 
             product_card.delete_requested.connect(
@@ -256,7 +266,7 @@ class MainWindow(QMainWindow):
         )
 
         total_bread_units_value = sum(
-            product.calculate_bread_units(weight)
+            product.calculate_bread_units(weight, self.bread_units_value)
             for product, weight in self.product_list
         )
 
@@ -277,3 +287,11 @@ class MainWindow(QMainWindow):
             self.settings_panel.width(),
             self.content_container.height(),
         )
+
+    def save_settings(self):
+        bread_units_value = self.bread_units_equals_edit.text()
+        if bread_units_value.isdigit():
+            bread_units_value = float(bread_units_value)
+            if 10 <= bread_units_value <= 15:
+                self.bread_units_value = bread_units_value
+                self.settings_panel.hide()
