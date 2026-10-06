@@ -53,7 +53,7 @@ class MainWindow(QMainWindow):
         self.logo = QLabel("LocalMind")
         self.logo.setObjectName("logo")
 
-        self.settings_button = QPushButton("⚙ Налаштування")
+        self.settings_button = QPushButton("⚙ Settings")
         self.settings_button.setObjectName("settingsButton")
         self.settings_button.clicked.connect(self.toggle_settings)
 
@@ -90,12 +90,10 @@ class MainWindow(QMainWindow):
         # Page header
         # =========================
 
-        self.title = QLabel("Розрахунок")
+        self.title = QLabel("Calculation")
         self.title.setObjectName("pageTitle")
 
-        subtitle = QLabel(
-            "Додайте продукти, щоб розрахувати вуглеводи та хлібні одиниці."
-        )
+        subtitle = QLabel("Add products to calculate carbohydrates and bread units.")
         subtitle.setObjectName("pageSubtitle")
 
         main_content_layout.addWidget(self.title)
@@ -118,10 +116,10 @@ class MainWindow(QMainWindow):
 
         meal_header = QHBoxLayout()
 
-        meal_title = QLabel("Продукти")
+        meal_title = QLabel("Products")
         meal_title.setObjectName("sectionTitle")
 
-        self.add_product_button = QPushButton("+ Додати продукт")
+        self.add_product_button = QPushButton("+ Add Product")
         self.add_product_button.setObjectName("secondaryButton")
 
         meal_header.addWidget(meal_title)
@@ -165,8 +163,8 @@ class MainWindow(QMainWindow):
         result_section = QHBoxLayout()
         result_section.setSpacing(8)
 
-        self.total_carbs = QLabel("Вуглеводи\n0 г")
-        self.total_bread_units = QLabel("Хлібні одиниці\n0 ХО")
+        self.total_carbs = QLabel("Carbohydrates\n0 g")
+        self.total_bread_units = QLabel("Bread Units\n0 BU")
 
         self.total_carbs.setObjectName("totalCarbs")
         self.total_bread_units.setObjectName("totalBreadUnits")
@@ -191,20 +189,25 @@ class MainWindow(QMainWindow):
         image_text_layout = QVBoxLayout()
         image_text_layout.setSpacing(2)
 
-        image_title = QLabel("Аналіз зображення")
+        image_title = QLabel("Image Analysis")
         image_title.setObjectName("sectionTitle")
 
-        image_description = QLabel("Додайте зображення продукту для аналізу.")
+        image_description = QLabel("Add a product image for analysis.")
         image_description.setObjectName("sectionDescription")
 
         image_text_layout.addWidget(image_title)
         image_text_layout.addWidget(image_description)
 
-        self.image_button = QPushButton("Додати зображення")
+        self.image_button = QPushButton("Add Image")
         self.image_button.setObjectName("secondaryButton")
+        self.image_button.setEnabled(False)
+
+        development_label = QLabel("In development")
+        development_label.setObjectName("developmentLabel")
 
         image_layout.addLayout(image_text_layout)
         image_layout.addStretch()
+        image_layout.addWidget(development_label)
         image_layout.addWidget(self.image_button)
 
         main_content_layout.addWidget(self.image_section)
@@ -237,10 +240,10 @@ class MainWindow(QMainWindow):
         settings_page_layout.setContentsMargins(0, 0, 0, 0)
         settings_page_layout.setSpacing(12)
 
-        settings_title = QLabel("Налаштування")
+        settings_title = QLabel("Settings")
         settings_title.setObjectName("settingsTitle")
 
-        bread_units_equals_label = QLabel("1 Хлібна Одиниця (г):")
+        bread_units_equals_label = QLabel("1 Bread Unit (g):")
         bread_units_equals_label.setObjectName("breadUnitsEqualsLabel")
 
         self.bread_units_equals_edit = QLineEdit()
@@ -248,10 +251,10 @@ class MainWindow(QMainWindow):
         self.bread_units_equals_edit.setText("10")
         self.bread_units_equals_edit.setPlaceholderText("10 - 15")
 
-        submit_button = QPushButton("Зберегти")
+        submit_button = QPushButton("Save")
         submit_button.setObjectName("primaryButton")
 
-        history_button = QPushButton("Відкрити історію")
+        history_button = QPushButton("Open History")
         history_button.setObjectName("secondaryButton")
 
         settings_page_layout.addWidget(settings_title)
@@ -275,10 +278,10 @@ class MainWindow(QMainWindow):
         history_page_layout.setContentsMargins(0, 0, 0, 0)
         history_page_layout.setSpacing(10)
 
-        history_title = QLabel("Історія")
+        history_title = QLabel("History")
         history_title.setObjectName("settingsTitle")
 
-        back_button = QPushButton("← Налаштування")
+        back_button = QPushButton("← Settings")
         back_button.setObjectName("secondaryButton")
 
         history_scroll = QScrollArea()
@@ -370,9 +373,9 @@ class MainWindow(QMainWindow):
             for product, weight in self.product_list
         )
 
-        self.total_carbs.setText(f"Всього вуглеводів: {total_carbs_value} г")
+        self.total_carbs.setText(f"Total Carbohydrates: {total_carbs_value} g")
 
-        self.total_bread_units.setText(f"Всього: {total_bread_units_value} ХО")
+        self.total_bread_units.setText(f"Total: {total_bread_units_value} BU")
 
     def toggle_settings(self):
         if self.settings_panel.isVisible():
@@ -399,16 +402,15 @@ class MainWindow(QMainWindow):
     def show_history(self):
         self.settings_stack.setCurrentIndex(1)
 
-        # очищаємо старий список
         while self.history_content_layout.count():
             item = self.history_content_layout.takeAt(0)
 
             if item.widget():
                 item.widget().deleteLater()
 
-        for product in self.history.get_products():
+        for product in reversed(self.history.get_products()):
             product_label = QLabel(
-                f"{product.name}\n" f"{product.carbs_per_100g} г / 100 г"
+                f"{product.name}\n" f"{product.carbs_per_100g} g / 100 g"
             )
 
             product_label.setObjectName("historyItem")

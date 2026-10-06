@@ -49,10 +49,10 @@ class ProductCard(QFrame):
         # Statistics
         # =========================
 
-        weight_card = StatCard("Нетто", f"{weight} г")
-        carbs_card = StatCard("Вуглеводи / 100 г", f"{carbs_per_100g} г")
-        carbohydrates_card = StatCard("Вуглеводи", f"{carbohydrates} г")
-        bread_units_card = StatCard("ХО", f"{bread_units}")
+        weight_card = StatCard("Netto", f"{weight} g")
+        carbs_card = StatCard("Carbohydrates / 100 g", f"{carbs_per_100g} g")
+        carbohydrates_card = StatCard("Carbohydrates", f"{carbohydrates} g")
+        bread_units_card = StatCard("Bread Units", f"{bread_units}")
 
         stat_layout = QGridLayout()
         stat_layout.setContentsMargins(0, 0, 0, 0)
@@ -162,7 +162,7 @@ class ProductDialog(QDialog):
         self.history = history
         self.selected_product = None
 
-        self.setWindowTitle("Додати продукт")
+        self.setWindowTitle("Add Product")
         self.setModal(True)
         self.setMinimumWidth(380)
 
@@ -174,7 +174,7 @@ class ProductDialog(QDialog):
 
         self.name_input = QLineEdit()
         self.name_input.setObjectName("productInput")
-        self.name_input.setPlaceholderText("Назва продукту")
+        self.name_input.setPlaceholderText("Product Name")
 
         # =========================
         # Name Completer
@@ -195,17 +195,17 @@ class ProductDialog(QDialog):
 
         self.carbs_input = QLineEdit()
         self.carbs_input.setObjectName("productInput")
-        self.carbs_input.setPlaceholderText("Вуглеводи на 100 г (г)")
+        self.carbs_input.setPlaceholderText("Carbohydrates per 100 g (g)")
 
         self.weight_input = QLineEdit()
         self.weight_input.setObjectName("productInput")
-        self.weight_input.setPlaceholderText("Вага (г)")
+        self.weight_input.setPlaceholderText("Weight (g)")
 
-        self.add_button = QPushButton("Додати")
+        self.add_button = QPushButton("Add")
         self.add_button.setObjectName("dialogAddButton")
         self.add_button.clicked.connect(self.validate_and_accept)
 
-        self.cancel_button = QPushButton("Скасувати")
+        self.cancel_button = QPushButton("Cancel")
         self.cancel_button.setObjectName("dialogCancelButton")
         self.cancel_button.clicked.connect(self.reject)
 
@@ -241,8 +241,8 @@ class ProductDialog(QDialog):
         if not name:
             QMessageBox.warning(
                 self,
-                "Помилка",
-                "Введіть назву продукту.",
+                "Error",
+                "Enter product name.",
             )
             self.name_input.setFocus()
             return
@@ -252,8 +252,8 @@ class ProductDialog(QDialog):
         except ValueError:
             QMessageBox.warning(
                 self,
-                "Помилка",
-                "Вага повинна бути числом.",
+                "Error",
+                "Weight must be a number.",
             )
             self.weight_input.setFocus()
             return
@@ -261,8 +261,8 @@ class ProductDialog(QDialog):
         if weight <= 0:
             QMessageBox.warning(
                 self,
-                "Помилка",
-                "Вага повинна бути більшою за 0.",
+                "Error",
+                "Weight must be greater than 0.",
             )
             self.weight_input.setFocus()
             return
@@ -272,8 +272,8 @@ class ProductDialog(QDialog):
         except ValueError:
             QMessageBox.warning(
                 self,
-                "Помилка",
-                "Кількість вуглеводів повинна бути числом.",
+                "Error",
+                "Carbohydrates must be a number.",
             )
             self.carbs_input.setFocus()
             return
@@ -281,8 +281,8 @@ class ProductDialog(QDialog):
         if carbs < 0:
             QMessageBox.warning(
                 self,
-                "Помилка",
-                "Кількість вуглеводів не може бути від'ємною.",
+                "Error",
+                "Carbohydrates cannot be negative.",
             )
             self.carbs_input.setFocus()
             return

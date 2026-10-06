@@ -481,3 +481,19 @@ QLineEdit::placeholder {
 #totalBreadUnits {
     color: #aaa0b4;
 }
+
+#developmentLabel {
+    color: #8f8995;
+    background-color: #211e25;
+    border: 1px solid #302c35;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+#secondaryButton:disabled {
+    background-color: #19171c;
+    color: #625d68;
+    border: 1px solid #29262e;
+}
