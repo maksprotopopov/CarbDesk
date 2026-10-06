@@ -1,142 +1,205 @@
+/* =========================================================
+   Base
+   ========================================================= */
+
 QMainWindow {
-    background-color: #0d0b12;
+    background-color: #111014;
 }
 
 QWidget {
-    color: #f4f1f7;
+    color: #e6e3ea;
     font-family: "Inter";
-    font-size: 14px;
+    font-size: 13px;
 }
+
+
+/* =========================================================
+   Header
+   ========================================================= */
 
 #logo {
-    color: #b56cff;
-    font-size: 22px;
-    font-weight: bold;
+    color: #b39ad8;
+    font-size: 20px;
+    font-weight: 600;
 }
+
+#settingsButton {
+    background-color: #1a181e;
+    color: #aaa3b3;
+
+    border: 1px solid #2b2830;
+    border-radius: 8px;
+
+    padding: 7px 11px;
+
+    font-size: 12px;
+}
+
+#settingsButton:hover {
+    background-color: #211e26;
+    color: #c5b4df;
+    border-color: #3a3342;
+}
+
+#settingsButton:pressed {
+    background-color: #26212d;
+}
+
+
+/* =========================================================
+   Page title
+   ========================================================= */
 
 #pageTitle {
-    color: #ffffff;
-    font-size: 26px;
-    font-weight: bold;
-    margin-top: 30px;
-    margin-bottom: 10px;
+    color: #f0edf2;
+
+    font-size: 24px;
+    font-weight: 600;
+
+    margin-top: 20px;
+    margin-bottom: 8px;
 }
+
+
+/* =========================================================
+   Main cards
+   ========================================================= */
 
 #card {
-    background-color: #17131e;
-    border: 1px solid #292230;
-    border-radius: 20px;
-    padding: 20px;
+    background-color: #18161b;
+
+    border: 1px solid #29262e;
+    border-radius: 12px;
+
+    padding: 16px;
 }
 
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+
 #primaryButton {
-    background-color: #9b4dff;
-    color: white;
+    background-color: #73559a;
+    color: #ffffff;
+
     border: none;
-    border-radius: 12px;
-    padding: 12px 20px;
-    font-weight: bold;
+    border-radius: 8px;
+
+    padding: 8px 14px;
+
+    font-size: 13px;
+    font-weight: 500;
 }
 
 #primaryButton:hover {
-    background-color: #ad6aff;
+    background-color: #8062a8;
 }
 
+#primaryButton:pressed {
+    background-color: #674b8b;
+}
+
+
 #secondaryButton {
-    background-color: #211a2c;
-    color: #c78aff;
-    border: 1px solid #432b5f;
-    border-radius: 12px;
-    padding: 10px 16px;
+    background-color: #1d1a21;
+    color: #b7a4ca;
+
+    border: 1px solid #332d3a;
+    border-radius: 8px;
+
+    padding: 7px 12px;
+
+    font-size: 13px;
+    font-weight: 500;
 }
 
 #secondaryButton:hover {
-    background-color: #2b2039;
+    background-color: #25202b;
+    color: #c7b6d8;
+    border-color: #42394c;
+}
+
+#secondaryButton:pressed {
+    background-color: #2b2433;
+}
+
+
+#productCard {
+    background-color: #18161b;
+    border: 1px solid #29262e;
+    border-radius: 9px;
+}
+
+#productName {
+    color: #e8e4eb;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 #deleteButton {
     background-color: transparent;
-    color: #91899c;
+    color: #77727e;
     border: none;
+    padding: 0;
     font-size: 16px;
-    font-weight: bold;
-}
-
-#deleteButton:hover {
-    color: #ff6b8a;
-}
-
-/* =============================
-   Product Card
-   ============================= */
-
-#productCard {
-    background-color: #17131e;
-    border: 1px solid #2a2333;
-    border-radius: 14px;
-}
-
-
-/* =============================
-   Product Name
-   ============================= */
-
-#productName {
-    color: #f4f1f7;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-
-/* =============================
-   Stat Card
-   ============================= */
-
-#statCard {
-    background-color: #211a2c;
-    border: 1px solid #30253b;
-    border-radius: 10px;
-}
-
-
-/* =============================
-   Stat Title
-   ============================= */
-
-#statTitle {
-    color: #91899c;
-    font-size: 11px;
     font-weight: 500;
 }
 
-/* =============================
-   Stat Value
-   ============================= */
-
-#statValue {
-    color: #c58cff;
-    font-size: 18px;
-    font-weight: 700;
+#deleteButton:hover {
+    color: #c87888;
 }
 
-#totalCarbs,
-#totalBreadUnits {
-    background-color: #17131e;
-    border: 1px solid #2a2333;
-    border-radius: 14px;
-    padding: 14px 18px;
-    color: #f4f1f7;
-    font-size: 16px;
+#statCard {
+    background-color: #211e25;
+    border: 1px solid #302c35;
+    border-radius: 6px;
+}
+
+#statTitle {
+    color: #85808a;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+#statValue {
+    color: #c1b5cc;
+    font-size: 13px;
     font-weight: 600;
 }
 
+
+/* =========================================================
+   Totals
+   ========================================================= */
+
+#totalCarbs,
+#totalBreadUnits {
+    background-color: #18161b;
+
+    border: 1px solid #29262e;
+    border-radius: 9px;
+
+    padding: 10px 14px;
+
+    color: #d9d4dd;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
 #totalCarbs {
-    color: #c58cff;
+    color: #b59bcf;
 }
 
 #totalBreadUnits {
-    color: #b98aff;
+    color: #ad94c9;
 }
+
+
+/* =========================================================
+   Scroll area
+   ========================================================= */
 
 QScrollArea {
     background: transparent;
@@ -147,29 +210,35 @@ QScrollArea > QWidget > QWidget {
     background: transparent;
 }
 
-/* =============================
-   Scroll Bar
-   ============================= */
+
+/* =========================================================
+   Scroll bar
+   ========================================================= */
 
 QScrollBar:vertical {
     background: transparent;
-    width: 10px;
-    margin: 4px 2px;
+
+    width: 7px;
+
+    margin: 2px 1px;
 }
 
 QScrollBar::handle:vertical {
-    background: #432b5f;
-    border-radius: 5px;
-    min-height: 50px;
+    background: #3b3542;
+
+    border-radius: 3px;
+
+    min-height: 40px;
 }
 
 QScrollBar::handle:vertical:hover {
-    background: #9b4dff;
+    background: #554a60;
 }
 
 QScrollBar::add-line:vertical,
 QScrollBar::sub-line:vertical {
     height: 0px;
+
     background: transparent;
     border: none;
 }
@@ -179,116 +248,236 @@ QScrollBar::sub-page:vertical {
     background: transparent;
 }
 
-/* =============================
-   Product Dialog
-   ============================= */
+
+/* =========================================================
+   Inputs
+   ========================================================= */
+
+QLineEdit {
+    background-color: #1b191f;
+    color: #e6e3ea;
+
+    border: 1px solid #302c35;
+    border-radius: 7px;
+
+    padding: 7px 9px;
+
+    selection-background-color: #60477b;
+}
+
+QLineEdit:focus {
+    border: 1px solid #735b8c;
+    background-color: #1e1b22;
+}
+
+QLineEdit::placeholder {
+    color: #716c76;
+}
+
+
+/* =========================================================
+   Product dialog
+   ========================================================= */
 
 #productDialog {
-    background-color: #0d0b12;
+    background-color: #111014;
 }
 
 #productInput {
-    background-color: #17131e;
-    color: #f4f1f7;
+    background-color: #1b191f;
+    color: #e6e3ea;
 
-    border: 1px solid #30253b;
-    border-radius: 12px;
+    border: 1px solid #302c35;
+    border-radius: 7px;
 
-    padding: 12px 14px;
+    padding: 8px 10px;
 
-    font-size: 14px;
+    font-size: 13px;
 }
 
 #productInput:focus {
-    border: 1px solid #9b4dff;
-    background-color: #1b1624;
+    border: 1px solid #735b8c;
+    background-color: #1e1b22;
 }
 
 #productInput::placeholder {
-    color: #91899c;
+    color: #716c76;
 }
 
 #dialogAddButton {
-    background-color: #9b4dff;
-    color: white;
+    background-color: #73559a;
+    color: #ffffff;
 
     border: none;
-    border-radius: 12px;
+    border-radius: 8px;
 
-    padding: 12px 16px;
+    padding: 8px 13px;
 
-    font-weight: bold;
+    font-size: 13px;
+    font-weight: 500;
 
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 }
 
 #dialogAddButton:hover {
-    background-color: #ad6aff;
+    background-color: #8062a8;
 }
 
 #dialogAddButton:pressed {
-    background-color: #863de0;
+    background-color: #674b8b;
 }
 
 #dialogCancelButton {
-    background-color: #211a2c;
-    color: #c78aff;
+    background-color: #1d1a21;
+    color: #b7a4ca;
 
-    border: 1px solid #432b5f;
-    border-radius: 12px;
+    border: 1px solid #332d3a;
+    border-radius: 8px;
 
-    padding: 11px 16px;
+    padding: 7px 13px;
+
+    font-size: 13px;
 }
 
 #dialogCancelButton:hover {
-    background-color: #2b2039;
+    background-color: #25202b;
+    color: #c7b6d8;
 }
 
 #dialogCancelButton:pressed {
-    background-color: #362647;
+    background-color: #2b2433;
 }
 
-/* =============================
-   Settings
-   ============================= */
+
+/* =========================================================
+   Settings panel
+   ========================================================= */
 
 #settingsPanel {
-    background-color: #17131e;
-    border: 1px solid #2a2333;
-    border-radius: 18px;
+    background-color: #17151a;
+
+    border: 1px solid #2c2931;
+    border-radius: 12px;
 }
 
 #settingsTitle {
-    color: #ffffff;
-    font-size: 20px;
+    color: #eeeaf0;
+
+    font-size: 18px;
     font-weight: 600;
 }
 
+
+/* =========================================================
+   Settings input
+   ========================================================= */
+
 #breadUnitsEqualsLabel {
-    color: #91899c;
-    font-size: 13px;
+    color: #918b96;
+
+    font-size: 12px;
     font-weight: 500;
 }
 
 #breadUnitsEqualsEdit {
-    background-color: #211a2c;
-    color: #f4f1f7;
-    border: 1px solid #30253b;
-    border-radius: 8px;
-    padding: 7px 10px;
-    min-height: 18px;
-    max-width: 100px;
+    background-color: #1c1a20;
+    color: #e6e3ea;
+
+    border: 1px solid #302c35;
+    border-radius: 7px;
+
+    padding: 6px 9px;
+
+    min-height: 16px;
+    max-width: 90px;
+
+    font-size: 13px;
 }
 
 #breadUnitsEqualsEdit:focus {
-    border: 1px solid #9b4dff;
-    background-color: #1b1624;
+    border: 1px solid #735b8c;
+    background-color: #201c24;
 }
 
+
+/* =========================================================
+   History
+   ========================================================= */
+
 #historyItem {
-    background-color: #211a2c;
-    border: 1px solid #30253b;
+    background-color: #1c1a20;
+
+    border: 1px solid #2d2932;
+    border-radius: 8px;
+
+    padding: 9px 10px;
+
+    color: #ded9e1;
+
+    font-size: 13px;
+}
+
+#historyItem:hover {
+    background-color: #211e26;
+    border-color: #393340;
+}
+
+/* =========================
+   Page subtitle
+   ========================= */
+
+#pageSubtitle {
+    color: #85808a;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+
+/* =========================
+   Section titles
+   ========================= */
+
+#sectionTitle {
+    color: #e6e2e9;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* =========================
+   Section descriptions
+   ========================= */
+
+#sectionDescription {
+    color: #85808a;
+    font-size: 12px;
+}
+
+
+/* =========================
+   Image analysis
+   ========================= */
+
+#imageSection {
+    background-color: #161419;
+    border: 1px solid #29262e;
     border-radius: 10px;
-    padding: 10px;
-    color: #f4f1f7;
+}
+
+#totalCarbs,
+#totalBreadUnits {
+    background-color: #1b191f;
+    border: 1px solid #29262e;
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+#totalCarbs {
+    color: #b59bcf;
+}
+
+#totalBreadUnits {
+    color: #aaa0b4;
 }

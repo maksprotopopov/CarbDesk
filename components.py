@@ -24,44 +24,58 @@ class ProductCard(QFrame):
 
         self.setObjectName("productCard")
 
-        weight_card = StatCard("Нетто", f"{weight} г")
-        carbs_card = StatCard("Вуглеводи / 100 г", f"{carbs_per_100g} г")
-        carbohydrates_card = StatCard("Вуглеводи на нетто", f"{carbohydrates} г")
-        bread_units_card = StatCard("ХО", f"{bread_units}")
+        # =========================
+        # Header
+        # =========================
 
         name_label = QLabel(name)
         name_label.setObjectName("productName")
 
-        self.delete_button = QPushButton("x")
+        self.delete_button = QPushButton("×")
         self.delete_button.setObjectName("deleteButton")
-        self.delete_button.setFixedSize(26, 26)
+        self.delete_button.setFixedSize(22, 22)
 
         self.delete_button.clicked.connect(self.delete_requested.emit)
 
-        main_layout = QVBoxLayout(self)
-        main_layout.setContentsMargins(12, 10, 12, 10)
-        main_layout.setSpacing(8)
-
         header_layout = QHBoxLayout()
+        header_layout.setContentsMargins(0, 0, 0, 0)
+        header_layout.setSpacing(4)
 
         header_layout.addWidget(name_label)
         header_layout.addStretch()
         header_layout.addWidget(self.delete_button)
 
-        main_layout.addLayout(header_layout)
+        # =========================
+        # Statistics
+        # =========================
+
+        weight_card = StatCard("Нетто", f"{weight} г")
+        carbs_card = StatCard("Вуглеводи / 100 г", f"{carbs_per_100g} г")
+        carbohydrates_card = StatCard("Вуглеводи", f"{carbohydrates} г")
+        bread_units_card = StatCard("ХО", f"{bread_units}")
 
         stat_layout = QGridLayout()
         stat_layout.setContentsMargins(0, 0, 0, 0)
-        stat_layout.setHorizontalSpacing(8)
+        stat_layout.setHorizontalSpacing(6)
         stat_layout.setVerticalSpacing(6)
 
-        stat_layout.addWidget(weight_card, 1, 0)
-        stat_layout.addWidget(carbs_card, 1, 1)
+        stat_layout.addWidget(weight_card, 0, 0)
+        stat_layout.addWidget(carbs_card, 0, 1)
+        stat_layout.addWidget(carbohydrates_card, 1, 0)
+        stat_layout.addWidget(bread_units_card, 1, 1)
 
-        stat_layout.addWidget(carbohydrates_card, 2, 0)
-        stat_layout.addWidget(bread_units_card, 2, 1)
+        # =========================
+        # Main layout
+        # =========================
 
+        main_layout = QVBoxLayout(self)
+        main_layout.setContentsMargins(10, 8, 10, 8)
+        main_layout.setSpacing(6)
+
+        main_layout.addLayout(header_layout)
         main_layout.addLayout(stat_layout)
+
+        self.setMaximumWidth(420)
 
 
 class StatCard(QFrame):
@@ -70,19 +84,18 @@ class StatCard(QFrame):
 
         self.setObjectName("statCard")
 
+        title_label = QLabel(title)
+        title_label.setObjectName("statTitle")
+
+        value_label = QLabel(value)
+        value_label.setObjectName("statValue")
+
         layout = QVBoxLayout(self)
+        layout.setContentsMargins(8, 6, 8, 6)
+        layout.setSpacing(1)
 
-        layout.setContentsMargins(10, 8, 10, 8)
-        layout.setSpacing(2)
-
-        self.title = QLabel(title)
-        self.title.setObjectName("statTitle")
-
-        self.value = QLabel(value)
-        self.value.setObjectName("statValue")
-
-        layout.addWidget(self.title)
-        layout.addWidget(self.value)
+        layout.addWidget(title_label)
+        layout.addWidget(value_label)
 
 
 class Product:

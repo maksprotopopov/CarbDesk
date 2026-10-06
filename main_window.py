@@ -26,11 +26,18 @@ class MainWindow(QMainWindow):
 
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
+
         central_layout = QVBoxLayout(central_widget)
+        central_layout.setContentsMargins(12, 8, 12, 12)
+        central_layout.setSpacing(0)
+
+        # =========================
+        # Data
+        # =========================
 
         self.history = ProductHistory()
         self.history.import_history()
-        print("History imported:", self.history.get_products())
+
         self.product_list = []
         self.bread_units_value = 10
 
@@ -40,6 +47,8 @@ class MainWindow(QMainWindow):
 
         header = QWidget()
         header_layout = QHBoxLayout(header)
+
+        header_layout.setContentsMargins(8, 4, 8, 4)
 
         self.logo = QLabel("LocalMind")
         self.logo.setObjectName("logo")
@@ -55,116 +64,7 @@ class MainWindow(QMainWindow):
         central_layout.addWidget(header)
 
         # =========================
-        # Content
-        # =========================
-
-        main_content = QWidget()
-        main_content_layout = QVBoxLayout(main_content)
-
-        # =========================
-        # Title
-        # =========================
-
-        self.title = QLabel("Оберіть варіант")
-        self.title.setObjectName("pageTitle")
-        self.title.setAlignment(Qt.AlignCenter)
-
-        main_content_layout.addWidget(self.title)
-
-        # =========================
-        # Options
-        # =========================
-
-        options_layout = QHBoxLayout()
-
-        # =========================
-        # Image analysis section
-        # =========================
-
-        self.image_section = QFrame()
-        self.image_section.setObjectName("card")
-        image_layout = QVBoxLayout(self.image_section)
-
-        image_title = QLabel("Аналіз зображення")
-        image_title.setAlignment(Qt.AlignCenter)
-
-        self.image_button = QPushButton("Додати зображення")
-        self.image_button.setObjectName("primaryButton")
-
-        image_layout.addWidget(image_title)
-        image_layout.addWidget(self.image_button)
-
-        # =========================
-        # Meal calculation section
-        # =========================
-
-        self.meal_section = QFrame()
-        self.meal_section.setObjectName("card")
-        self.meal_layout = QVBoxLayout(self.meal_section)
-
-        meal_title = QLabel("Розрахунок")
-        meal_title.setAlignment(Qt.AlignCenter)
-
-        self.meal_layout.addWidget(meal_title)
-
-        self.meal_scroll = QScrollArea()
-        self.meal_scroll.setWidgetResizable(True)
-        self.meal_scroll.setFrameShape(QFrame.NoFrame)
-
-        self.meal_content = QWidget()
-        self.meal_content_layout = QVBoxLayout(self.meal_content)
-        self.meal_content_layout.setContentsMargins(0, 0, 0, 0)
-        self.meal_content_layout.setSpacing(8)
-        self.meal_content_layout.setAlignment(Qt.AlignTop)
-
-        self.meal_scroll.setWidget(self.meal_content)
-
-        self.meal_layout.addWidget(self.meal_scroll)
-
-        # -------------------------
-        # Add product
-        # -------------------------
-
-        self.add_product_button = QPushButton("+ Додати продукт")
-        self.add_product_button.setObjectName("secondaryButton")
-        self.meal_layout.addWidget(self.add_product_button)
-
-        self.add_product_button.clicked.connect(self.show_product_dialog)
-
-        # -------------------------
-        # Total
-        # -------------------------
-
-        total_carbs_value = 0
-        total_bread_units_value = 0
-
-        result_section = QGridLayout()
-
-        self.total_carbs = QLabel(f"Всього вуглеводів: {total_carbs_value} г")
-        self.total_bread_units = QLabel(f"Всього: {total_bread_units_value} ХО")
-
-        self.total_carbs.setObjectName("totalCarbs")
-        self.total_bread_units.setObjectName("totalBreadUnits")
-
-        self.total_carbs.setAlignment(Qt.AlignRight)
-        self.total_bread_units.setAlignment(Qt.AlignRight)
-
-        result_section.addWidget(self.total_carbs, 0, 0)
-        result_section.addWidget(self.total_bread_units, 0, 1)
-
-        self.meal_layout.addLayout(result_section)
-
-        # =========================
-        # Add sections
-        # =========================
-
-        options_layout.addWidget(self.image_section)
-        options_layout.addWidget(self.meal_section)
-
-        main_content_layout.addLayout(options_layout)
-
-        # =========================
-        # Container
+        # Content container
         # =========================
 
         self.content_container = QWidget()
@@ -172,8 +72,142 @@ class MainWindow(QMainWindow):
         content_layout = QVBoxLayout(self.content_container)
         content_layout.setContentsMargins(0, 0, 0, 0)
 
-        content_layout.addWidget(main_content)
         central_layout.addWidget(self.content_container)
+
+        # =========================
+        # Main content
+        # =========================
+
+        main_content = QWidget()
+
+        main_content_layout = QVBoxLayout(main_content)
+        main_content_layout.setContentsMargins(24, 12, 24, 24)
+        main_content_layout.setSpacing(10)
+
+        content_layout.addWidget(main_content)
+
+        # =========================
+        # Page header
+        # =========================
+
+        self.title = QLabel("Розрахунок")
+        self.title.setObjectName("pageTitle")
+
+        subtitle = QLabel(
+            "Додайте продукти, щоб розрахувати вуглеводи та хлібні одиниці."
+        )
+        subtitle.setObjectName("pageSubtitle")
+
+        main_content_layout.addWidget(self.title)
+        main_content_layout.addWidget(subtitle)
+
+        # =========================
+        # Meal calculation section
+        # =========================
+
+        self.meal_section = QFrame()
+        self.meal_section.setObjectName("card")
+
+        self.meal_layout = QVBoxLayout(self.meal_section)
+        self.meal_layout.setContentsMargins(16, 16, 16, 16)
+        self.meal_layout.setSpacing(12)
+
+        # =========================
+        # Meal header
+        # =========================
+
+        meal_header = QHBoxLayout()
+
+        meal_title = QLabel("Продукти")
+        meal_title.setObjectName("sectionTitle")
+
+        self.add_product_button = QPushButton("+ Додати продукт")
+        self.add_product_button.setObjectName("secondaryButton")
+
+        meal_header.addWidget(meal_title)
+        meal_header.addStretch()
+        meal_header.addWidget(self.add_product_button)
+
+        self.meal_layout.addLayout(meal_header)
+
+        self.add_product_button.clicked.connect(self.show_product_dialog)
+
+        # =========================
+        # Product list
+        # =========================
+
+        self.meal_scroll = QScrollArea()
+        self.meal_scroll.setWidgetResizable(True)
+        self.meal_scroll.setFrameShape(QFrame.NoFrame)
+
+        self.meal_content = QWidget()
+
+        self.meal_content_layout = QGridLayout(self.meal_content)
+        self.meal_content_layout.setContentsMargins(0, 0, 0, 0)
+        self.meal_content_layout.setHorizontalSpacing(8)
+        self.meal_content_layout.setVerticalSpacing(8)
+
+        self.meal_content_layout.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+
+        # self.meal_content_layout.setColumnMinimumWidth(0, 300)
+        # self.meal_content_layout.setColumnMinimumWidth(1, 300)
+        self.meal_content_layout.setColumnStretch(0, 0)
+        self.meal_content_layout.setColumnStretch(1, 0)
+
+        self.meal_scroll.setWidget(self.meal_content)
+
+        self.meal_layout.addWidget(self.meal_scroll, 1)
+
+        # =========================
+        # Totals
+        # =========================
+
+        result_section = QHBoxLayout()
+        result_section.setSpacing(8)
+
+        self.total_carbs = QLabel("Вуглеводи\n0 г")
+        self.total_bread_units = QLabel("Хлібні одиниці\n0 ХО")
+
+        self.total_carbs.setObjectName("totalCarbs")
+        self.total_bread_units.setObjectName("totalBreadUnits")
+
+        result_section.addWidget(self.total_carbs)
+        result_section.addWidget(self.total_bread_units)
+
+        self.meal_layout.addLayout(result_section)
+
+        main_content_layout.addWidget(self.meal_section, 1)
+
+        # =========================
+        # Image analysis
+        # =========================
+
+        self.image_section = QFrame()
+        self.image_section.setObjectName("imageSection")
+
+        image_layout = QHBoxLayout(self.image_section)
+        image_layout.setContentsMargins(14, 12, 14, 12)
+
+        image_text_layout = QVBoxLayout()
+        image_text_layout.setSpacing(2)
+
+        image_title = QLabel("Аналіз зображення")
+        image_title.setObjectName("sectionTitle")
+
+        image_description = QLabel("Додайте зображення продукту для аналізу.")
+        image_description.setObjectName("sectionDescription")
+
+        image_text_layout.addWidget(image_title)
+        image_text_layout.addWidget(image_description)
+
+        self.image_button = QPushButton("Додати зображення")
+        self.image_button.setObjectName("secondaryButton")
+
+        image_layout.addLayout(image_text_layout)
+        image_layout.addStretch()
+        image_layout.addWidget(self.image_button)
+
+        main_content_layout.addWidget(self.image_section)
 
         # =========================
         # Settings panel
@@ -186,20 +220,22 @@ class MainWindow(QMainWindow):
         self.settings_panel.setFixedWidth(280)
 
         settings_layout = QVBoxLayout(self.settings_panel)
-        settings_layout.setContentsMargins(24, 24, 24, 24)
-        settings_layout.setSpacing(16)
+        settings_layout.setContentsMargins(20, 20, 20, 20)
+        settings_layout.setSpacing(12)
 
         self.settings_stack = QStackedWidget()
+
         settings_layout.addWidget(self.settings_stack)
 
         # =========================
-        # Settings content
+        # Settings page
         # =========================
 
         settings_page = QWidget()
+
         settings_page_layout = QVBoxLayout(settings_page)
         settings_page_layout.setContentsMargins(0, 0, 0, 0)
-        settings_page_layout.setSpacing(16)
+        settings_page_layout.setSpacing(12)
 
         settings_title = QLabel("Налаштування")
         settings_title.setObjectName("settingsTitle")
@@ -222,21 +258,22 @@ class MainWindow(QMainWindow):
         settings_page_layout.addWidget(bread_units_equals_label)
         settings_page_layout.addWidget(self.bread_units_equals_edit)
         settings_page_layout.addWidget(submit_button)
+
         settings_page_layout.addStretch()
+
         settings_page_layout.addWidget(history_button)
 
         submit_button.clicked.connect(self.save_settings)
 
-        self.settings_panel.hide()
-
         # =========================
-        # History content
+        # History page
         # =========================
 
         history_page = QWidget()
+
         history_page_layout = QVBoxLayout(history_page)
         history_page_layout.setContentsMargins(0, 0, 0, 0)
-        history_page_layout.setSpacing(12)
+        history_page_layout.setSpacing(10)
 
         history_title = QLabel("Історія")
         history_title.setObjectName("settingsTitle")
@@ -249,6 +286,7 @@ class MainWindow(QMainWindow):
         history_scroll.setFrameShape(QFrame.NoFrame)
 
         history_content = QWidget()
+
         self.history_content_layout = QVBoxLayout(history_content)
         self.history_content_layout.setContentsMargins(0, 0, 0, 0)
         self.history_content_layout.setSpacing(8)
@@ -257,15 +295,21 @@ class MainWindow(QMainWindow):
         history_scroll.setWidget(history_content)
 
         history_page_layout.addWidget(history_title)
-        history_page_layout.addWidget(history_scroll)
+        history_page_layout.addWidget(history_scroll, 1)
         history_page_layout.addWidget(back_button)
 
         # =========================
-        # Adding Pages
+        # Add pages
         # =========================
 
         self.settings_stack.addWidget(settings_page)
         self.settings_stack.addWidget(history_page)
+
+        self.settings_stack.setCurrentWidget(settings_page)
+
+        # =========================
+        # Navigation
+        # =========================
 
         history_button.clicked.connect(self.show_history)
 
@@ -273,12 +317,19 @@ class MainWindow(QMainWindow):
             lambda: self.settings_stack.setCurrentWidget(settings_page)
         )
 
+        # =========================
+        # Hide settings
+        # =========================
+
+        self.settings_panel.hide()
+
     # =========================
     # Functions
     # =========================
 
     def show_product_dialog(self):
         dialog = ProductDialog(self, history=self.history)
+
         if dialog.exec() == QDialog.Accepted:
             product, weight = dialog.get_product_data()
 
@@ -298,13 +349,14 @@ class MainWindow(QMainWindow):
                 lambda: self.delete_product(product_card, product, weight)
             )
 
-            self.meal_content_layout.addWidget(product_card)
+            self.refresh_product_grid()
             self.update_totals()
 
     def delete_product(self, product_card, product, weight):
-        self.product_list.remove([product, weight])
-        self.meal_content_layout.removeWidget(product_card)
-        product_card.deleteLater()
+        if [product, weight] in self.product_list:
+            self.product_list.remove([product, weight])
+
+        self.refresh_product_grid()
         self.update_totals()
 
     def update_totals(self):
@@ -362,3 +414,50 @@ class MainWindow(QMainWindow):
             product_label.setObjectName("historyItem")
 
             self.history_content_layout.addWidget(product_label)
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+
+        if self.settings_panel.isVisible():
+            self.settings_panel.setGeometry(
+                self.content_container.width() - self.settings_panel.width(),
+                0,
+                self.settings_panel.width(),
+                self.content_container.height(),
+            )
+
+    def refresh_product_grid(self):
+        while self.meal_content_layout.count():
+            item = self.meal_content_layout.takeAt(0)
+
+            widget = item.widget()
+
+            if widget is not None:
+                widget.deleteLater()
+
+        for index, (product, weight) in enumerate(self.product_list):
+
+            product_card = ProductCard(
+                name=product.name,
+                weight=weight,
+                carbs_per_100g=product.carbs_per_100g,
+                carbohydrates=product.calculate_carbohydrates(weight),
+                bread_units=product.calculate_bread_units(
+                    weight, self.bread_units_value
+                ),
+            )
+
+            product_card.setFixedWidth(360)
+
+            product_card.delete_requested.connect(
+                lambda card=product_card, p=product, w=weight: self.delete_product(
+                    card, p, w
+                )
+            )
+
+            row = index // 2
+            column = index % 2
+
+            self.meal_content_layout.addWidget(
+                product_card, row, column, Qt.AlignLeft | Qt.AlignTop
+            )
