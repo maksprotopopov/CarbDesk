@@ -4,3 +4,9 @@
 
 .DS_Store
 .env*
+
+/build
+/dist
+
+.dmg
+.vscode

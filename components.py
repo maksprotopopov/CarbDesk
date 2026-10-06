@@ -13,7 +13,11 @@ from PySide6.QtWidgets import (
 
 from PySide6.QtCore import QStringListModel, Qt, Signal
 import json
+import os
+import shutil
+import sys
 from pathlib import Path
+from utils import get_app_data_path
 
 
 class ProductCard(QFrame):
@@ -115,6 +119,17 @@ class ProductHistory:
     def __init__(self):
         self.products = []
 
+        if getattr(sys, "frozen", False):
+            self.app_data_path = get_app_data_path()
+            self.app_data_path.mkdir(parents=True, exist_ok=True)
+
+            self.history_file = self.app_data_path / "products.json"
+            self.default_file = Path(sys._MEIPASS) / "data" / "products.json"
+
+        else:
+            self.history_file = Path(__file__).parent / "data" / "products.json"
+            self.default_file = self.history_file
+
     def add_product(self, product):
         self.products.append(product)
 
@@ -129,13 +144,20 @@ class ProductHistory:
         return self.products
 
     def import_history(self):
-        file_path = Path(__file__).parent / "data" / "products.json"
+        if not self.history_file.exists():
+
+            if self.default_file.exists():
+                shutil.copy2(self.default_file, self.history_file)
+            else:
+                print("Default history file not found:", self.default_file)
+                return
 
         try:
-            with open(file_path, "r", encoding="utf-8") as file:
+            with open(self.history_file, "r", encoding="utf-8") as file:
                 data = json.load(file)
-        except FileNotFoundError:
-            print("History file not found:", file_path)
+
+        except (FileNotFoundError, json.JSONDecodeError) as error:
+            print("Failed to load history:", error)
             return
 
         self.products = [
@@ -144,13 +166,13 @@ class ProductHistory:
             if (isinstance(item, dict) and "name" in item and "carbs_per_100g" in item)
         ]
 
-    def export_history(self, file_path="./data/products.json"):
+    def export_history(self):
         data = [
             {"name": product.name, "carbs_per_100g": product.carbs_per_100g}
             for product in self.products
         ]
 
-        with open(file_path, "w", encoding="utf-8") as file:
+        with open(self.history_file, "w", encoding="utf-8") as file:
             json.dump(data, file, ensure_ascii=False, indent=2)
 
 
