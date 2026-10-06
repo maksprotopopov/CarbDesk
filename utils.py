@@ -4,13 +4,13 @@ from pathlib import Path
 
 def get_app_data_path():
     if sys.platform == "win32":
-        return Path.home() / "AppData" / "Local" / "LocalMind"
+        return Path.home() / "AppData" / "Local" / "CarbDesk"
 
     elif sys.platform == "darwin":
-        return Path.home() / "Library" / "Application Support" / "LocalMind"
+        return Path.home() / "Library" / "Application Support" / "CarbDesk"
 
     else:
-        return Path.home() / ".local" / "share" / "LocalMind"
+        return Path.home() / ".local" / "share" / "CarbDesk"
 
 
 def get_resource_path(filename):

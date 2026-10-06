@@ -21,7 +21,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("LocalMind")
+        self.setWindowTitle("CarbDesk")
         self.resize(1000, 700)
 
         central_widget = QWidget()
@@ -50,7 +50,7 @@ class MainWindow(QMainWindow):
 
         header_layout.setContentsMargins(8, 4, 8, 4)
 
-        self.logo = QLabel("LocalMind")
+        self.logo = QLabel("CarbDesk")
         self.logo.setObjectName("logo")
 
         self.settings_button = QPushButton("⚙ Settings")

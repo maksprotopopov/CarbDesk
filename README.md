@@ -1,6 +1,6 @@
-# LocalMind
+# CarbDesk
 
-### LocalMind is a desktop application for calculating carbohydrates and bread units (BU) in food products.
+### CarbDesk is a desktop application for calculating carbohydrates and bread units (BU) in food products.
 
 The application is being developed using Python and PySide6, with a focus on providing a simple and convenient way to manage products and perform nutritional calculations locally.
 
@@ -58,13 +58,13 @@ After the first launch, the application stores user-modified product data separa
 User product data is stored in:
 
 ```
-%LOCALAPPDATA%\LocalMind\products.json
+%LOCALAPPDATA%\CarbDesk\products.json
 ```
 
 For example:
 
 ```
-C:\Users\<Username>\AppData\Local\LocalMind\products.json
+C:\Users\<Username>\AppData\Local\CarbDesk\products.json
 ```
 
 ### MacOS
@@ -72,13 +72,13 @@ C:\Users\<Username>\AppData\Local\LocalMind\products.json
 User product data is stored in:
 
 ```
-~/Library/Application Support/LocalMind/products.json
+~/Library/Application Support/CarbDesk/products.json
 ```
 
 For example:
 
 ```
-/Users/<Username>/Library/Application Support/LocalMind/products.json
+/Users/<Username>/Library/Application Support/CarbDesk/products.json
 ```
 
 Each product contains its name and the amount of carbohydrates per 100 grams.
@@ -105,7 +105,7 @@ The core functionality for product management and nutritional calculations has a
 
 ## Building the Application
 
-The same PyInstaller specification file (LocalMind.spec) can be used to build the application on both Windows and macOS.
+The same PyInstaller specification file (CarbDesk.spec) can be used to build the application on both Windows and macOS.
 
 However, PyInstaller builds applications for the platform on which it is executed. Therefore, the application must be built separately on each target operating system.
 
@@ -114,25 +114,25 @@ However, PyInstaller builds applications for the platform on which it is execute
 Run the following command on Windows:
 
 ```bash
-pyinstaller LocalMind.spec
+pyinstaller CarbDesk.spec
 ```
 
 The resulting application will be located in:
 
 ```
-dist/LocalMind/
+dist/CarbDesk/
 ```
 
 The executable can be launched using:
 
 ```
-dist/LocalMind/LocalMind.exe
+dist/CarbDesk/CarbDesk.exe
 ```
 
 User-modified product data is stored separately in:
 
 ```
-%LOCALAPPDATA%\LocalMind\products.json
+%LOCALAPPDATA%\CarbDesk\products.json
 ```
 
 ### MacOS
@@ -140,31 +140,31 @@ User-modified product data is stored separately in:
 Run the following command on macOS:
 
 ```bash
-pyinstaller LocalMind.spec
+pyinstaller CarbDesk.spec
 ```
 
 The resulting application will be located in:
 
 ```
-dist/LocalMind.app
+dist/CarbDesk.app
 ```
 
 The executable can be launched using:
 
 ```bash
-open dist/LocalMind.app
+open dist/CarbDesk.app
 ```
 
 Or directly from the terminal:
 
 ```bash
-dist/LocalMind.app/Contents/MacOS/LocalMind
+dist/CarbDesk.app/Contents/MacOS/CarbDesk
 ```
 
 User-modified product data is stored separately in:
 
 ```
-~/Library/Application Support/LocalMind/products.json
+~/Library/Application Support/CarbDesk/products.json
 ```
 
 ## Creating a DMG on macOS
@@ -181,26 +181,20 @@ Then create the DMG:
 
 ```bash
 create-dmg \
-  --volname "LocalMind" \
+  --volname "CarbDesk" \
   --window-size 600 400 \
   --app-drop-link 450 200 \
-  "LocalMind.dmg" \
-  "dist/LocalMind.app"
+  "CarbDesk.dmg" \
+  "dist/CarbDesk.app"
 ```
 
 The resulting file will be created in the current project directory:
 
 ```
-LocalMind.dmg
+CarbDesk.dmg
 ```
 
-For example:
-
-```
-/Users/<Username>/Coding/Python/LocalMind/LocalMind/LocalMind.dmg
-```
-
-The .dmg contains the LocalMind.app application and can be distributed to other macOS users.
+The .dmg contains the CarbDesk.app application and can be distributed to other macOS users.
 
 ## Running the Application from Source
 

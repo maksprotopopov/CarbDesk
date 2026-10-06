@@ -24,7 +24,7 @@ exe = EXE(
     a.scripts,
     [],
     exclude_binaries=True,
-    name='LocalMind',
+    name='CarbDesk',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
@@ -43,11 +43,11 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='LocalMind',
+    name='CarbDesk',
 )
 app = BUNDLE(
     coll,
-    name='LocalMind.app',
+    name='CarbDesk.app',
     icon=None,
     bundle_identifier=None,
 )
